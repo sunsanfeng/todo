@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>TodoMVC</title>
+		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
+		<link rel="stylesheet" href="css/app.css">
+		<script src="node_modules/angular/angular.js"></script>
+	</head>
+	<body ng-app="MyTodoMvc">
+		<section class="todoapp" ng-controller="MainController">
+			<header class="header">
+				<h1>todos</h1>
+				<form ng-submit="add()">
+					<input class="new-todo" placeholder="What needs to be done?" ng-model="text" autofocus>
+				</form>
+				
+			</header>
+			
+			<section class="main">
+				<input id="toggle-all" class="toggle-all" type="checkbox" ng-click="toggleAll()" value="all">
+				<label for="toggle-all">Mark all as complete</label>
+				<ul class="todo-list">
+					<li ng-repeat="todo in todos | filter:selector" ng-class="{completed:todo.completed,editing:todo.id == currentEditingId}" data-id="{{todo.id}}">
+						<div class="view">
+							<input class="toggle" type="checkbox" ng-model="todo.completed">
+							<label ng-dblclick="editing(todo.id)">{{todo.text}}</label>
+							<button class="destroy" ng-click="remove(todo.id)"></button>
+						</div>
+						<form ng-submit="save()">
+							<input class="edit" ng-model="todo.text">
+						</form>
+					</li>
+				</ul>
+			</section>
+			<footer class="footer">
+				<span class="todo-count">共<strong>{{todos.length}}</strong>项任务</span>
+				<ul class="filters">
+					<li>
+						<a ng-class="{selected:$location.hash() == ''}" href="#" >所有</a>
+					</li>
+					<li>
+						<a ng-class="{selected:$location.hash() == '/active'}" href="#/active">准备</a>
+					</li>
+					<li>
+						<a ng-class="{selected:$location.hash() == '/completed'}" href="#/completed">完成</a>
+					</li>
+				</ul>
+				<button class="clear-completed" ng-click="clear()">清除完成</button>
+			</footer>
+		</section>
+		<footer class="info">
+			<p>Double-click to edit a todo</p>
+			<p>Template by <a href="#">Sindre Sorhus</a></p>
+			<p>Created by <a href="#">you</a></p>
+			<p>Part of <a href="#">TodoMVC</a></p>
+		</footer>
+		<script src="js/app.js"></script>
+	</body>
+</html>
